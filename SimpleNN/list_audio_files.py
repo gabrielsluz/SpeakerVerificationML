@@ -1,4 +1,5 @@
 import os
+import random
 
 #Lists all the wav files in the format of the voxceleb test dataset.
 def list_audios(root_dir):
@@ -44,11 +45,11 @@ def make_diff_speakers_pairs(speakers):
     for i in range(0, len(speakers)):
         k = 0
         for j in range(i+1, len(speakers)):
-            diff_pairs.append(["0", speakers[i][k], speakers[j][0]])
+            diff_pairs.append(["0", speakers[i][k], speakers[j][random.randint(0, len(speakers[j])-1)]])
             k += 1
             if k >= len(speakers[i]):
                 k = 0
-            diff_pairs.append(["0", speakers[i][k], speakers[j][1]])
+            diff_pairs.append(["0", speakers[i][k], speakers[j][random.randint(0, len(speakers[j])-1)]])
             k += 1
             if k >= len(speakers[i]):
                 k = 0
@@ -63,4 +64,7 @@ speakers = list_speakers_audios(audio_list)
 print(len(speakers))
 diff_pairs = make_diff_speakers_pairs(speakers)
 print(len(diff_pairs))
+
+for i in diff_pairs:
+    print(i)
 
