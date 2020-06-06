@@ -1,18 +1,42 @@
-import sys
 import os
 
-root_dir = sys.argv[1]
+#Lists all the wav files in the format of the voxceleb test dataset.
+def list_audios(root_dir):
+    audio_list = []
+    for root, dirs, files in os.walk(root_dir):
+        for filename in files:
+            if filename.split(".")[1] == "wav":
+                audio_path_list = root.split("/")
+                length = len(audio_path_list) 
+                audio_path = audio_path_list[length - 2] + "/" + audio_path_list[length - 1] + "/" + filename
+                audio_list.append(audio_path)
 
-audio_list = []
+    return audio_list
 
-for root, dirs, files in os.walk(root_dir):
-    for filename in files:
-        if filename.split(".")[1] == "wav":
-            audio_path_list = root.split("/")
-            audio_path_list = root.split("/")
-            length = len(audio_path_list) 
-            audio_path = audio_path_list[length - 2] + "/" + audio_path_list[length - 1] + "/" + filename
-            audio_list.append(audio_path)
+#Get the speaker id from a simple path : speaker_id/sub_dir/audio.wav
+def get_speaker_id(audio_path):
+    return audio_path.split("/")[0]
 
-print(len(audio_list))
-print(audio_list[0:6])
+#It returns a list(speakers) of lists(audios)
+def list_speakers_audios(audio_list):
+    audio_list.sort()
+    speakers = []
+    speaker_now = get_speaker_id(audio_list[0])
+    speaker_audios = []
+
+    for audio in audio_list:
+        if(speaker_now != get_speaker_id(audio)):
+            speakers.append(speaker_audios)
+            speaker_audios = []
+            speaker_now = get_speaker_id(audio)
+        speaker_audios.append(audio)
+    
+    speakers.append(speaker_audios)
+    return speakers
+
+
+
+audio_list = list_audios("../../voxceleb1/vox1_dev_partaa/")
+speakers = list_speakers_audios(audio_list)
+
+
