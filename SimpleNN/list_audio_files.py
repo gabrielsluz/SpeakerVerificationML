@@ -34,9 +34,35 @@ def list_speakers_audios(audio_list):
     speakers.append(speaker_audios)
     return speakers
 
+#Receives a list(speakers) of lists(audios)
+#Returns list of labeled (diff speakers) pairs, represented in lists (label, audio1, audio2)
+def make_diff_speakers_pairs(speakers):
+    i = 0
+    j = 0
+    k = 0
+    diff_pairs = []
+    for i in range(0, len(speakers)):
+        for j in range(i+1, len(speakers)):
+            diff_pairs.append(["0", speakers[i][k], speakers[j][0]])
+            if k + 1 < len(speakers[i]):
+                k += 1
+            else:
+                k = 0
+            diff_pairs.append(["0", speakers[i][k], speakers[j][1]])
+            if k + 1 < len(speakers[i]):
+                k += 1
+            else:
+                k = 0
+
+    return diff_pairs
+
+
 
 
 audio_list = list_audios("../../voxceleb1/vox1_dev_partaa/")
 speakers = list_speakers_audios(audio_list)
+print(speakers)
+diff_pairs = make_diff_speakers_pairs(speakers[0:2])
+print(diff_pairs)
 
 
