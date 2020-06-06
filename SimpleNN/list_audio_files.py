@@ -73,9 +73,14 @@ speakers = list_speakers_audios(audio_list)
 diff_pairs = make_diff_speakers_pairs(speakers)
 same_pairs = make_same_speakers_pairs(speakers)
 
+random.shuffle(diff_pairs)
+random.shuffle(same_pairs)
+
 dataset = []
 for i in range(len(diff_pairs)):
     dataset.append(diff_pairs[i])
     dataset.append(same_pairs[i])
 
-print(len(dataset))
+#print(len(dataset))
+for i in dataset:
+    print(i[0], i[1], i[2])
