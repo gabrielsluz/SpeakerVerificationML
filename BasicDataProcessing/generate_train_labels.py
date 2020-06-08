@@ -67,7 +67,7 @@ def make_same_speakers_pairs(speakers):
     return same_pairs
 
 
-
+'''
 audio_list = list_audios("../../voxceleb1/vox1_dev_partaa/")
 speakers = list_speakers_audios(audio_list)
 diff_pairs = make_diff_speakers_pairs(speakers)
@@ -84,3 +84,4 @@ for i in range(len(diff_pairs)):
 #print(len(dataset))
 for i in dataset:
     print(i[0], i[1], i[2])
+'''

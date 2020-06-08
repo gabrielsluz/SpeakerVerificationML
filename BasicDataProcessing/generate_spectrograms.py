@@ -19,10 +19,13 @@ def mel_spectrograms(audio_list, audio_length_ms, sampling_rate, n_mels, window_
     max_size = int(0.001 * sampling_rate * audio_length_ms) 
 
     for audio_path in audio_list:
-        audio, sampling_rate = librosa.load(audio_path, sr = None, mono = True, offset = 0.0, duration = None)
-        S = librosa.feature.melspectrogram(audio[:max_size], sr=sampling_rate, n_fft=window_size, hop_length=stride_size, n_mels=n_mels)
-        S_DB = librosa.power_to_db(S, ref=np.max)
-        spectrograms[audio_path] = S_DB
+        try:
+            audio, sampling_rate = librosa.load(audio_path, sr = None, mono = True, offset = 0.0, duration = None)
+            S = librosa.feature.melspectrogram(audio[:max_size], sr=sampling_rate, n_fft=window_size, hop_length=stride_size, n_mels=n_mels)
+            S_DB = librosa.power_to_db(S, ref=np.max)
+            spectrograms[audio_path] = S_DB
+        except:
+            print(audio_path)
     
     return spectrograms
 
