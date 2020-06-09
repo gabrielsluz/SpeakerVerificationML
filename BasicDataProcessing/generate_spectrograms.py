@@ -32,7 +32,7 @@ def mel_spectrograms(audio_list, audio_length_ms, sampling_rate, n_mels, window_
 def display_spectrogram(spectrogram, sampling_rate, stride_size):
     librosa.display.specshow(spectrogram, sr=sampling_rate, hop_length=stride_size, x_axis='time', y_axis='mel')
     plt.colorbar(format='%+2.0f dB')
-    plt.savefig('foo.png')
+    #plt.savefig('foo.png')
 
 
 '''
