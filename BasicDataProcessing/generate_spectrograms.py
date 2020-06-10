@@ -32,6 +32,7 @@ def mel_spectrograms(audio_list, audio_length_ms, sampling_rate, n_mels, window_
 
 
 #Same as mel_spectrograms but sets the mean to 0 and variance to 1
+#Returns a sklearn scaler and the spectrograms dict 
 def mel_spectrogramsNormalized(audio_list, audio_length_ms, sampling_rate, n_mels, window_ms, stride_ms):
     spectrograms = {}
     stride_size = int(0.001 * sampling_rate * stride_ms)
@@ -64,6 +65,27 @@ def mel_spectrogramsNormalized(audio_list, audio_length_ms, sampling_rate, n_mel
         index += 1
     
     return spectrograms, scaler
+
+#Generates spectrograms and normalize using a scaler
+def NormalizeDictUsingScaler(spectrograms, audio_list, scaler):
+    spec_shape = spectrograms[audio_list[0]].shape
+    spec_array = np.zeros((len(audio_list), spec_shape[0], spec_shape[1]))
+
+    index = 0
+    for audio_path in audio_list:
+        spec_array[index] = spectrograms[audio_path]
+        index += 1
+
+    spec_array = spec_array.reshape((len(audio_list), spec_shape[0] * spec_shape[1]))
+    spec_array = scaler.transform(spec_array)
+    spec_array = spec_array.reshape((len(audio_list), spec_shape[0], spec_shape[1]))
+
+    index = 0
+    for audio_path in audio_list:
+        spectrograms[audio_path] = spec_array[index]
+        index += 1
+    
+    return spectrograms
 
 def display_spectrogram(spectrogram, sampling_rate, stride_size):
     librosa.display.specshow(spectrogram, sr=sampling_rate, hop_length=stride_size, x_axis='time', y_axis='mel')
