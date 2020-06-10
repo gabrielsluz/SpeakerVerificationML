@@ -76,8 +76,9 @@ stride_size = int(0.001 * 16000 * 10)
 spectrograms = mel_spectrograms(["TesteAudio.wav"], 3000, 16000, 110, 20, 10)
 print(spectrograms)
 display_spectrogram(spectrograms["TesteAudio.wav"], 16000, stride_size)
-'''
+
 spectrograms = mel_spectrograms(["TesteAudio.wav", "TesteAudio1.wav"], 3000, 16000, 64, 20, 10)
 print(spectrograms)
 spectrograms = mel_spectrogramsNormalized(["TesteAudio.wav", "TesteAudio1.wav"], 3000, 16000, 64, 20, 10)
 print(spectrograms)
+'''
