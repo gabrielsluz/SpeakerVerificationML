@@ -58,17 +58,17 @@ def make_diff_speakers_pairs(speakers):
 
 #Receives a list(speakers) of lists(audios)
 #Returns list of labeled (same speakers) pairs, represented in lists (label, audio1, audio2)
-def make_same_speakers_pairs(speakers):
+def make_same_speakers_pairs(speakers, num_pairs):
     same_pairs = []
     for i in range(0, len(speakers)):
-        for j in range(0, 394):
+        for j in range(0, num_pairs // len(speakers)):
             same_pairs.append(["1", speakers[i][random.randint(0, len(speakers[i])-1)], speakers[i][random.randint(0, len(speakers[i])-1)]])
 
     return same_pairs
 
 
-'''
-audio_list = list_audios("../../voxceleb1/vox1_dev_partaa/")
+"""
+audio_list = list_audios("../../voxceleb1/dev/")
 speakers = list_speakers_audios(audio_list)
 diff_pairs = make_diff_speakers_pairs(speakers)
 same_pairs = make_same_speakers_pairs(speakers)
@@ -86,5 +86,6 @@ random.shuffle(dataset)
 #print(len(dataset))
 for i in dataset:
     print(i[0], i[1], i[2])
-'''
 
+
+"""
