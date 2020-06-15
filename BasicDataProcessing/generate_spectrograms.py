@@ -51,6 +51,8 @@ def mel_spectrogramsNormalized(audio_list, audio_length_ms, sampling_rate, n_mel
             audio, sampling_rate = librosa.load(audio_path, sr = None, mono = True, offset = 0.0, duration = None)
             S = librosa.feature.melspectrogram(audio[:max_size], sr=sampling_rate, n_fft=window_size, hop_length=stride_size, n_mels=n_mels)
             S_DB = librosa.power_to_db(S, ref=np.max)
+            if data_type == 'float32':
+                S_DB = np.float32(S_DB)
             spec_array[index] = S_DB
             index += 1
         except:
@@ -60,8 +62,6 @@ def mel_spectrogramsNormalized(audio_list, audio_length_ms, sampling_rate, n_mel
     scaler = preprocessing.StandardScaler().fit(spec_array)
     spec_array = scaler.transform(spec_array)
     spec_array = spec_array.reshape((len(audio_list), n_mels, n_windows))
-    if data_type == 'float32':
-        spec_array = np.float32(spec_array)
 
     index = 0
     for audio_path in audio_list:
